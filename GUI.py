@@ -114,7 +114,7 @@ class mywindow(QtWidgets.QMainWindow):
     def addRightWidget(self):
         '''Right widget is aimed to show unecessary pic\n
         or In the future, this part can display components info'''
-        conceptpix=QtGui.QPixmap(r'StatisticProcess\GUI\1.jpg')
+        conceptpix=QtGui.QPixmap(r'picture\1.jpg')
         self.conceptLabel=QtWidgets.QLabel()
         self.conceptLabel.setPixmap(conceptpix)
         self.titleConceptLabel=QtWidgets.QLabel('Concept Pic')
@@ -126,7 +126,7 @@ class mywindow(QtWidgets.QMainWindow):
 
     def addMidWidget(self):
         '''MidWidget is core part which is used to show gif caculated by abaqus'''
-        abaqusReasult=QtGui.QMovie(r'StatisticProcess\GUI\2.gif')
+        abaqusReasult=QtGui.QMovie(r'picture\2.gif')
         self.abaqusLabel=QtWidgets.QLabel()
         self.abaqusLabel.setMovie(abaqusReasult)
         abaqusReasult.start()
