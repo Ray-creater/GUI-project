@@ -1,0 +1,927 @@
+# -*- coding: mbcs -*-
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].rootAssembly.translate(instanceList=(
+    'LoadSupporter-1-lin-1-2-lin-2-1', ), vector=(0.0, -0.02, 0.525))
+mdb.models['Model-1'].rootAssembly.Surface(name='m_Surf-1', side1Faces=
+    mdb.models['Model-1'].rootAssembly.instances['Concrete-1'].faces.getSequenceFromMask(
+    ('[#800000 ]', ), ))
+mdb.models['Model-1'].rootAssembly.Surface(name='s_Surf-1', side1Faces=
+    mdb.models['Model-1'].rootAssembly.instances['LoadSupporter-1'].faces.getSequenceFromMask(
+    ('[#3 ]', ), ))
+mdb.models['Model-1'].Tie(adjust=ON, master=
+    mdb.models['Model-1'].rootAssembly.surfaces['m_Surf-1'], name=
+    'Constraint-1', positionToleranceMethod=COMPUTED, slave=
+    mdb.models['Model-1'].rootAssembly.surfaces['s_Surf-1'], thickness=ON, 
+    tieRotations=ON)
+del mdb.models['Model-1'].constraints['Constraint-1']
+mdb.models['Model-1'].rootAssembly.Surface(name='m_Surf-3', side1Faces=
+    mdb.models['Model-1'].rootAssembly.instances['Concrete-1'].faces.getSequenceFromMask(
+    ('[#800000 ]', ), ))
+mdb.models['Model-1'].rootAssembly.Surface(name='s_Surf-3', side1Faces=
+    mdb.models['Model-1'].rootAssembly.instances['LoadSupporter-1'].faces.getSequenceFromMask(
+    ('[#3 ]', ), ))
+mdb.models['Model-1'].Tie(adjust=ON, master=
+    mdb.models['Model-1'].rootAssembly.surfaces['m_Surf-3'], name='up1', 
+    positionToleranceMethod=COMPUTED, slave=
+    mdb.models['Model-1'].rootAssembly.surfaces['s_Surf-3'], thickness=ON, 
+    tieRotations=ON)
+mdb.models['Model-1'].rootAssembly.Surface(name='m_Surf-5', side1Faces=
+    mdb.models['Model-1'].rootAssembly.instances['Concrete-1'].faces.getSequenceFromMask(
+    ('[#0 #2 ]', ), ))
+mdb.models['Model-1'].rootAssembly.Surface(name='s_Surf-5', side1Faces=
+    mdb.models['Model-1'].rootAssembly.instances['LoadSupporter-1-lin-1-2-lin-1-2'].faces.getSequenceFromMask(
+    ('[#3 ]', ), ))
+mdb.models['Model-1'].Tie(adjust=ON, master=
+    mdb.models['Model-1'].rootAssembly.surfaces['m_Surf-5'], name='up2', 
+    positionToleranceMethod=COMPUTED, slave=
+    mdb.models['Model-1'].rootAssembly.surfaces['s_Surf-5'], thickness=ON, 
+    tieRotations=ON)
+mdb.models['Model-1'].rootAssembly.Surface(name='m_Surf-7', side1Faces=
+    mdb.models['Model-1'].rootAssembly.instances['Concrete-1'].faces.getSequenceFromMask(
+    ('[#40 ]', ), ))
+mdb.models['Model-1'].rootAssembly.Surface(name='s_Surf-7', side1Faces=
+    mdb.models['Model-1'].rootAssembly.instances['LoadSupporter-1-lin-1-2'].faces.getSequenceFromMask(
+    ('[#3 ]', ), ))
+mdb.models['Model-1'].Tie(adjust=ON, master=
+    mdb.models['Model-1'].rootAssembly.surfaces['m_Surf-7'], name='Down1', 
+    positionToleranceMethod=COMPUTED, slave=
+    mdb.models['Model-1'].rootAssembly.surfaces['s_Surf-7'], thickness=ON, 
+    tieRotations=ON)
+mdb.models['Model-1'].rootAssembly.Surface(name='m_Surf-9', side1Faces=
+    mdb.models['Model-1'].rootAssembly.instances['Concrete-1'].faces.getSequenceFromMask(
+    ('[#0 #1 ]', ), ))
+mdb.models['Model-1'].rootAssembly.Surface(name='s_Surf-9', side1Faces=
+    mdb.models['Model-1'].rootAssembly.instances['LoadSupporter-1-lin-1-2-lin-2-1'].faces.getSequenceFromMask(
+    ('[#3 ]', ), ))
+mdb.models['Model-1'].Tie(adjust=ON, master=
+    mdb.models['Model-1'].rootAssembly.surfaces['m_Surf-9'], name='Down2', 
+    positionToleranceMethod=COMPUTED, slave=
+    mdb.models['Model-1'].rootAssembly.surfaces['s_Surf-9'], thickness=ON, 
+    tieRotations=ON)
+mdb.models['Model-1'].rootAssembly.Set(name='Set-1', referencePoints=(
+    mdb.models['Model-1'].rootAssembly.instances['LoadSupporter-1-lin-1-2'].referencePoints[3], 
+    ))
+mdb.models['Model-1'].DisplacementBC(amplitude=UNSET, createStepName='Initial', 
+    distributionType=UNIFORM, fieldName='', localCsys=None, name='BC-1', 
+    region=mdb.models['Model-1'].rootAssembly.sets['Set-1'], u1=SET, u2=SET, 
+    u3=SET, ur1=SET, ur2=SET, ur3=SET)
+mdb.models['Model-1'].rootAssembly.Set(name='Set-2', referencePoints=(
+    mdb.models['Model-1'].rootAssembly.instances['LoadSupporter-1-lin-1-2-lin-2-1'].referencePoints[3], 
+    ))
+mdb.models['Model-1'].DisplacementBC(amplitude=UNSET, createStepName='Initial', 
+    distributionType=UNIFORM, fieldName='', localCsys=None, name='BC-2', 
+    region=mdb.models['Model-1'].rootAssembly.sets['Set-2'], u1=SET, u2=SET, 
+    u3=SET, ur1=SET, ur2=SET, ur3=SET)
+mdb.models['Model-1'].StaticStep(description='load', name='Step-1', previous=
+    'Initial')
+mdb.models['Model-1'].rootAssembly.Set(name='Set-3', referencePoints=(
+    mdb.models['Model-1'].rootAssembly.instances['LoadSupporter-1'].referencePoints[3], 
+    ))
+mdb.models['Model-1'].DisplacementBC(amplitude=UNSET, createStepName='Step-1', 
+    distributionType=UNIFORM, fieldName='', fixed=OFF, localCsys=None, name=
+    'BC-3', region=mdb.models['Model-1'].rootAssembly.sets['Set-3'], u1=UNSET, 
+    u2=0.0, u3=UNSET, ur1=UNSET, ur2=UNSET, ur3=UNSET)
+mdb.models['Model-1'].rootAssembly.Set(name='Set-4', referencePoints=(
+    mdb.models['Model-1'].rootAssembly.instances['LoadSupporter-1-lin-1-2-lin-1-2'].referencePoints[3], 
+    ))
+mdb.models['Model-1'].DisplacementBC(amplitude=UNSET, createStepName='Step-1', 
+    distributionType=UNIFORM, fieldName='', fixed=OFF, localCsys=None, name=
+    'BC-4', region=mdb.models['Model-1'].rootAssembly.sets['Set-4'], u1=UNSET, 
+    u2=0.0, u3=UNSET, ur1=UNSET, ur2=UNSET, ur3=UNSET)
+mdb.models['Model-1'].boundaryConditions['BC-3'].setValues(u2=0.02)
+mdb.models['Model-1'].boundaryConditions['BC-4'].setValues(u2=0.02)
+mdb.models['Model-1'].boundaryConditions['BC-4'].setValues(u2=-0.02)
+mdb.models['Model-1'].boundaryConditions['BC-3'].setValues(u2=-0.02)
+mdb.models['Model-1'].parts['Concrete'].seedPart(deviationFactor=0.1, 
+    minSizeFactor=0.1, size=0.05)
+mdb.models['Model-1'].parts['Concrete'].generateMesh()
+mdb.models['Model-1'].rootAssembly.regenerate()
+mdb.models['Model-1'].rootAssembly.Set(name='up', referencePoints=((
+    mdb.models['Model-1'].rootAssembly.instances['LoadSupporter-1-lin-1-2-lin-1-2'].referencePoints[3], 
+    ), (
+    mdb.models['Model-1'].rootAssembly.instances['LoadSupporter-1'].referencePoints[3], 
+    )))
+mdb.models['Model-1'].HistoryOutputRequest(createStepName='Step-1', name=
+    'H-Output-2', rebar=EXCLUDE, region=
+    mdb.models['Model-1'].rootAssembly.sets['up'], sectionPoints=DEFAULT, 
+    variables=('RF1', 'RF2', 'RF3'))
+mdb.Job(atTime=None, contactPrint=OFF, description='', echoPrint=OFF, 
+    explicitPrecision=SINGLE, getMemoryFromAnalysis=True, historyPrint=OFF, 
+    memory=90, memoryUnits=PERCENTAGE, model='Model-1', modelPrint=OFF, 
+    multiprocessingMode=DEFAULT, name='Job-1', nodalOutputPrecision=SINGLE, 
+    numCpus=4, numDomains=4, numGPUs=0, queue=None, scratch='', type=ANALYSIS, 
+    userSubroutine='', waitHours=0, waitMinutes=0)
+mdb.models['Model-1'].parts['Concrete'].setElementType(elemTypes=(ElemType(
+    elemCode=C3D8R, elemLibrary=STANDARD, secondOrderAccuracy=OFF, 
+    kinematicSplit=AVERAGE_STRAIN, hourglassControl=DEFAULT, 
+    distortionControl=DEFAULT), ElemType(elemCode=C3D6, elemLibrary=STANDARD), 
+    ElemType(elemCode=C3D4, elemLibrary=STANDARD)), regions=(
+    mdb.models['Model-1'].parts['Concrete'].cells.getSequenceFromMask((
+    '[#1ff ]', ), ), ))
+mdb.models['Model-1'].rootAssembly.regenerate()
+mdb.jobs['Job-1'].submit(consistencyChecking=OFF)
+mdb.jobs['Job-1']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'USER-20161022CS', 'handle': 0, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OVERCONSTRAINT CHECKS: THE *TIE PAIR BETWEEN SURFACES ASSEMBLY_LOADSUPPORTER-1-LIN-1-2_S_SURF-7 AND ASSEMBLY_M_SURF-7 ATTEMPTS TO TIE ONE DEFORMABLE AND ONE RIGID BODY. SINCE THE *TIE SLAVE SURFACE BELONGS IN PART OR ENTIRELY TO THE RIGID BODY, THE NODES ON THIS SURFACE WOULD BE OVERCONSTRAINED  BY THE *RIGID BODY AND *TIE COMBINATION. THE SLAVE AND MASTER ARE SWITCHED SO THAT OVERCONSTRAINTS ARE AVOIDED.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OVERCONSTRAINT CHECKS: THE *TIE PAIR BETWEEN SURFACES ASSEMBLY_LOADSUPPORTER-1-LIN-1-2-LIN-2-1_S_SURF-9 AND ASSEMBLY_M_SURF-9 ATTEMPTS TO TIE ONE DEFORMABLE AND ONE RIGID BODY. SINCE THE *TIE SLAVE SURFACE BELONGS IN PART OR ENTIRELY TO THE RIGID BODY, THE NODES ON THIS SURFACE WOULD BE OVERCONSTRAINED  BY THE *RIGID BODY AND *TIE COMBINATION. THE SLAVE AND MASTER ARE SWITCHED SO THAT OVERCONSTRAINTS ARE AVOIDED.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OVERCONSTRAINT CHECKS: THE *TIE PAIR BETWEEN SURFACES ASSEMBLY_LOADSUPPORTER-1_S_SURF-1 AND ASSEMBLY_M_SURF-3 ATTEMPTS TO TIE ONE DEFORMABLE AND ONE RIGID BODY. SINCE THE *TIE SLAVE SURFACE BELONGS IN PART OR ENTIRELY TO THE RIGID BODY, THE NODES ON THIS SURFACE WOULD BE OVERCONSTRAINED  BY THE *RIGID BODY AND *TIE COMBINATION. THE SLAVE AND MASTER ARE SWITCHED SO THAT OVERCONSTRAINTS ARE AVOIDED.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OVERCONSTRAINT CHECKS: THE *TIE PAIR BETWEEN SURFACES ASSEMBLY_LOADSUPPORTER-1-LIN-1-2-LIN-1-2_S_SURF-5 AND ASSEMBLY_M_SURF-5 ATTEMPTS TO TIE ONE DEFORMABLE AND ONE RIGID BODY. SINCE THE *TIE SLAVE SURFACE BELONGS IN PART OR ENTIRELY TO THE RIGID BODY, THE NODES ON THIS SURFACE WOULD BE OVERCONSTRAINED  BY THE *RIGID BODY AND *TIE COMBINATION. THE SLAVE AND MASTER ARE SWITCHED SO THAT OVERCONSTRAINTS ARE AVOIDED.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'IN THE OPTION *CONCRETE COMPRESSION HARDENING, STRESS VALUES SMALLER THAN THE MINIMUM (1.00000E-02 TIMES THE STRESS AT INITIAL YIELD) HAVE BEEN SPECIFIED. THE MINIMUM VALUE WILL BE ASSUMED.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': '768 elements have missing property definitions. The elements have been identified in element set ErrElemMissingSection.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ODB_FILE, {'phase': BATCHPRE_PHASE, 
+    'file': 'F:\\temp\\Job-1.odb', 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ABORTED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase failed due to errors', 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {
+    'message': 'Analysis Input File Processor exited with an error.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(JOB_ABORTED, {
+    'message': 'Analysis Input File Processor exited with an error.', 
+    'jobName': 'Job-1'})
+mdb.models['Model-1'].materials['Concrete'].concreteDamagedPlasticity.concreteCompressionHardening.setValues(
+    table=((27110000.0, 0.0), (31660000.0, 0.0002), (35260000.0, 0.0004), (
+    37870000.0, 0.0006), (39460000.0, 0.0008), (40000000.0, 0.001), (
+    39770000.0, 0.0011), (28880000.0, 0.002), (19500000.0, 0.0029), (
+    14100000.0, 0.0038), (10860000.0, 0.0047), (8765000.0, 0.0056), (7318000.0, 
+    0.0065), (6266000.0, 0.0074), (5471000.0, 0.0083)))
+mdb.models['Model-1'].materials['Concrete'].concreteDamagedPlasticity.concreteTensionStiffening.setValues(
+    table=((3000000.0, 0.0), (0.0, 0.000102)))
+mdb.models['Model-1'].HomogeneousSolidSection(material='Concrete', name=
+    'concrete', thickness=None)
+mdb.models['Model-1'].parts['Concrete'].Set(cells=
+    mdb.models['Model-1'].parts['Concrete'].cells.getSequenceFromMask((
+    '[#1ff ]', ), ), name='Set-2')
+mdb.models['Model-1'].parts['Concrete'].SectionAssignment(offset=0.0, 
+    offsetField='', offsetType=MIDDLE_SURFACE, region=
+    mdb.models['Model-1'].parts['Concrete'].sets['Set-2'], sectionName=
+    'concrete', thicknessAssignment=FROM_SECTION)
+mdb.models['Model-1'].rootAssembly.regenerate()
+mdb.jobs['Job-1'].submit(consistencyChecking=OFF)
+mdb.jobs['Job-1']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'USER-20161022CS', 'handle': 0, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OVERCONSTRAINT CHECKS: THE *TIE PAIR BETWEEN SURFACES ASSEMBLY_LOADSUPPORTER-1-LIN-1-2_S_SURF-7 AND ASSEMBLY_M_SURF-7 ATTEMPTS TO TIE ONE DEFORMABLE AND ONE RIGID BODY. SINCE THE *TIE SLAVE SURFACE BELONGS IN PART OR ENTIRELY TO THE RIGID BODY, THE NODES ON THIS SURFACE WOULD BE OVERCONSTRAINED  BY THE *RIGID BODY AND *TIE COMBINATION. THE SLAVE AND MASTER ARE SWITCHED SO THAT OVERCONSTRAINTS ARE AVOIDED.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OVERCONSTRAINT CHECKS: THE *TIE PAIR BETWEEN SURFACES ASSEMBLY_LOADSUPPORTER-1-LIN-1-2-LIN-2-1_S_SURF-9 AND ASSEMBLY_M_SURF-9 ATTEMPTS TO TIE ONE DEFORMABLE AND ONE RIGID BODY. SINCE THE *TIE SLAVE SURFACE BELONGS IN PART OR ENTIRELY TO THE RIGID BODY, THE NODES ON THIS SURFACE WOULD BE OVERCONSTRAINED  BY THE *RIGID BODY AND *TIE COMBINATION. THE SLAVE AND MASTER ARE SWITCHED SO THAT OVERCONSTRAINTS ARE AVOIDED.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OVERCONSTRAINT CHECKS: THE *TIE PAIR BETWEEN SURFACES ASSEMBLY_LOADSUPPORTER-1_S_SURF-1 AND ASSEMBLY_M_SURF-3 ATTEMPTS TO TIE ONE DEFORMABLE AND ONE RIGID BODY. SINCE THE *TIE SLAVE SURFACE BELONGS IN PART OR ENTIRELY TO THE RIGID BODY, THE NODES ON THIS SURFACE WOULD BE OVERCONSTRAINED  BY THE *RIGID BODY AND *TIE COMBINATION. THE SLAVE AND MASTER ARE SWITCHED SO THAT OVERCONSTRAINTS ARE AVOIDED.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OVERCONSTRAINT CHECKS: THE *TIE PAIR BETWEEN SURFACES ASSEMBLY_LOADSUPPORTER-1-LIN-1-2-LIN-1-2_S_SURF-5 AND ASSEMBLY_M_SURF-5 ATTEMPTS TO TIE ONE DEFORMABLE AND ONE RIGID BODY. SINCE THE *TIE SLAVE SURFACE BELONGS IN PART OR ENTIRELY TO THE RIGID BODY, THE NODES ON THIS SURFACE WOULD BE OVERCONSTRAINED  BY THE *RIGID BODY AND *TIE COMBINATION. THE SLAVE AND MASTER ARE SWITCHED SO THAT OVERCONSTRAINTS ARE AVOIDED.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'IN THE OPTION *CONCRETE TENSION STIFFENING, STRESS VALUES SMALLER THAN THE MINIMUM (1.00000E-02 TIMES THE INITIAL FAILURE STRESS) HAVE BEEN SPECIFIED. THE MINIMUM VALUE WILL BE ASSUMED.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ODB_FILE, {'phase': BATCHPRE_PHASE, 
+    'file': 'F:\\temp\\Job-1.odb', 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(COMPLETED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STARTED, {'phase': STANDARD_PHASE, 
+    'clientHost': 'USER-20161022CS', 'handle': 11624, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STEP, {'stepName': 'load', 'phase': STANDARD_PHASE, 
+    'stepId': 1, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 0, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.0, 'attempts': 0, 
+    'timeIncrement': 1.0, 'increment': 0, 'stepTime': 0.0, 'step': 1, 
+    'jobName': 'Job-1', 'severe': 0, 'iterations': 0, 'phase': STANDARD_PHASE, 
+    'equilibrium': 0})
+mdb.jobs['Job-1']._Message(MEMORY_ESTIMATE, {'phase': STANDARD_PHASE, 
+    'jobName': 'Job-1', 'memory': 38.6166362762451})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': STANDARD_PHASE, 
+    'message': 'THE PLASTICITY/CREEP/CONNECTOR FRICTION ALGORITHM DID NOT CONVERGE AT 64 POINTS', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.0, 'attempts': ' 1U', 
+    'timeIncrement': 1.0, 'increment': 1, 'stepTime': 0.0, 'step': 1, 
+    'jobName': 'Job-1', 'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 
+    'equilibrium': 1})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': STANDARD_PHASE, 
+    'message': 'THE PLASTICITY/CREEP/CONNECTOR FRICTION ALGORITHM DID NOT CONVERGE AT 94 POINTS', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.0, 'attempts': ' 2U', 
+    'timeIncrement': 0.25, 'increment': 1, 'stepTime': 0.0, 'step': 1, 
+    'jobName': 'Job-1', 'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 
+    'equilibrium': 1})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': STANDARD_PHASE, 
+    'message': 'THE PLASTICITY/CREEP/CONNECTOR FRICTION ALGORITHM DID NOT CONVERGE AT 86 POINTS', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.0, 'attempts': ' 3U', 
+    'timeIncrement': 0.0625, 'increment': 1, 'stepTime': 0.0, 'step': 1, 
+    'jobName': 'Job-1', 'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 
+    'equilibrium': 1})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': STANDARD_PHASE, 
+    'message': 'THE PLASTICITY/CREEP/CONNECTOR FRICTION ALGORITHM DID NOT CONVERGE AT 26 POINTS', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.0, 'attempts': ' 4U', 
+    'timeIncrement': 0.015625, 'increment': 1, 'stepTime': 0.0, 'step': 1, 
+    'jobName': 'Job-1', 'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 
+    'equilibrium': 1})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 1, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.00390625, 'attempts': 5, 
+    'timeIncrement': 0.00390625, 'increment': 1, 'stepTime': 0.00390625, 
+    'step': 1, 'jobName': 'Job-1', 'severe': 0, 'iterations': 1, 
+    'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 2, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.0078125, 'attempts': 1, 
+    'timeIncrement': 0.00390625, 'increment': 2, 'stepTime': 0.0078125, 
+    'step': 1, 'jobName': 'Job-1', 'severe': 0, 'iterations': 1, 
+    'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': STANDARD_PHASE, 
+    'message': 'THE PLASTICITY/CREEP/CONNECTOR FRICTION ALGORITHM DID NOT CONVERGE AT 12 POINTS', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.0078125, 'attempts': ' 1U', 
+    'timeIncrement': 0.005859375, 'increment': 3, 'stepTime': 0.0078125, 
+    'step': 1, 'jobName': 'Job-1', 'severe': 0, 'iterations': 2, 
+    'phase': STANDARD_PHASE, 'equilibrium': 2})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 3, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.00927734375, 'attempts': 2, 
+    'timeIncrement': 0.00146484375, 'increment': 3, 'stepTime': 0.00927734375, 
+    'step': 1, 'jobName': 'Job-1', 'severe': 0, 'iterations': 1, 
+    'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 4, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.011474609375, 'attempts': 1, 
+    'timeIncrement': 0.002197265625, 'increment': 4, 
+    'stepTime': 0.011474609375, 'step': 1, 'jobName': 'Job-1', 'severe': 0, 
+    'iterations': 3, 'phase': STANDARD_PHASE, 'equilibrium': 3})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': STANDARD_PHASE, 
+    'message': 'THE PLASTICITY/CREEP/CONNECTOR FRICTION ALGORITHM DID NOT CONVERGE AT 16 POINTS', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.011474609375, 
+    'attempts': ' 1U', 'timeIncrement': 0.0032958984375, 'increment': 5, 
+    'stepTime': 0.011474609375, 'step': 1, 'jobName': 'Job-1', 'severe': 0, 
+    'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 5, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.012298583984375, 
+    'attempts': 2, 'timeIncrement': 0.000823974609375, 'increment': 5, 
+    'stepTime': 0.012298583984375, 'step': 1, 'jobName': 'Job-1', 'severe': 0, 
+    'iterations': 2, 'phase': STANDARD_PHASE, 'equilibrium': 2})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 6, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.0135345458984375, 
+    'attempts': 1, 'timeIncrement': 0.0012359619140625, 'increment': 6, 
+    'stepTime': 0.0135345458984375, 'step': 1, 'jobName': 'Job-1', 'severe': 0, 
+    'iterations': 3, 'phase': STANDARD_PHASE, 'equilibrium': 3})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': STANDARD_PHASE, 
+    'message': 'THE PLASTICITY/CREEP/CONNECTOR FRICTION ALGORITHM DID NOT CONVERGE AT 8 POINTS', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.0135345458984375, 
+    'attempts': ' 1U', 'timeIncrement': 0.00185394287109375, 'increment': 7, 
+    'stepTime': 0.0135345458984375, 'step': 1, 'jobName': 'Job-1', 'severe': 0, 
+    'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 7, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.0139980316162109, 
+    'attempts': 2, 'timeIncrement': 0.000463485717773438, 'increment': 7, 
+    'stepTime': 0.0139980316162109, 'step': 1, 'jobName': 'Job-1', 'severe': 0, 
+    'iterations': 2, 'phase': STANDARD_PHASE, 'equilibrium': 2})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 8, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.0146932601928711, 
+    'attempts': 1, 'timeIncrement': 0.000695228576660156, 'increment': 8, 
+    'stepTime': 0.0146932601928711, 'step': 1, 'jobName': 'Job-1', 'severe': 0, 
+    'iterations': 2, 'phase': STANDARD_PHASE, 'equilibrium': 2})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': STANDARD_PHASE, 
+    'message': 'THE PLASTICITY/CREEP/CONNECTOR FRICTION ALGORITHM DID NOT CONVERGE AT 2 POINTS', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 15, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.0146932601928711, 
+    'attempts': ' 1U', 'timeIncrement': 0.00104284286499023, 'increment': 9, 
+    'stepTime': 0.0146932601928711, 'step': 1, 'jobName': 'Job-1', 'severe': 0, 
+    'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.0157748182173236, 
+    'attempts': 2, 'timeIncrement': 1.16002265713178e-05, 'increment': 15, 
+    'stepTime': 0.0157748182173236, 'step': 1, 'jobName': 'Job-1', 'severe': 0, 
+    'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 9, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': STANDARD_PHASE, 
+    'message': 'THE PLASTICITY/CREEP/CONNECTOR FRICTION ALGORITHM DID NOT CONVERGE AT 2 POINTS', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.0149539709091187, 
+    'attempts': 2, 'timeIncrement': 0.000260710716247559, 'increment': 9, 
+    'stepTime': 0.0149539709091187, 'step': 1, 'jobName': 'Job-1', 'severe': 0, 
+    'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.0157748182173236, 
+    'attempts': ' 1U', 'timeIncrement': 1.74003398569766e-05, 'increment': 16, 
+    'stepTime': 0.0157748182173236, 'step': 1, 'jobName': 'Job-1', 'severe': 0, 
+    'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 10, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': STANDARD_PHASE, 
+    'message': 'THE PLASTICITY/CREEP/CONNECTOR FRICTION ALGORITHM DID NOT CONVERGE AT 2 POINTS', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.01534503698349, 
+    'attempts': 1, 'timeIncrement': 0.000391066074371338, 'increment': 10, 
+    'stepTime': 0.01534503698349, 'step': 1, 'jobName': 'Job-1', 'severe': 0, 
+    'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': STANDARD_PHASE, 
+    'message': 'Time increment required is less than the minimum specified', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': STANDARD_PHASE, 
+    'message': 'THE PLASTICITY/CREEP/CONNECTOR FRICTION ALGORITHM DID NOT CONVERGE AT 4 POINTS', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ABORTED, {'phase': STANDARD_PHASE, 
+    'message': 'Analysis phase failed due to errors', 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.01534503698349, 
+    'attempts': ' 1U', 'timeIncrement': 0.000586599111557007, 'increment': 11, 
+    'stepTime': 0.01534503698349, 'step': 1, 'jobName': 'Job-1', 'severe': 0, 
+    'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 11, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.0154916867613792, 
+    'attempts': 2, 'timeIncrement': 0.000146649777889252, 'increment': 11, 
+    'stepTime': 0.0154916867613792, 'step': 1, 'jobName': 'Job-1', 'severe': 0, 
+    'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 12, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {
+    'message': 'Abaqus/Standard Analysis exited with an error - Please see the  message file for possible error messages if the file exists.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(JOB_ABORTED, {
+    'message': 'Abaqus/Standard Analysis exited with an error - Please see the  message file for possible error messages if the file exists.', 
+    'jobName': 'Job-1'})
+mdb.models['Model-1'].materials['Concrete'].concreteDamagedPlasticity.concreteTensionStiffening.setValues(
+    table=((2260000.0, 0.0), ))
+mdb.models['Model-1'].ConstrainedSketch(name='__edit__', objectToCopy=
+    mdb.models['Model-1'].parts['Concrete'].features['Solid extrude-1'].sketch)
+mdb.models['Model-1'].parts['Concrete'].projectReferencesOntoSketch(filter=
+    COPLANAR_EDGES, sketch=mdb.models['Model-1'].sketches['__edit__'], 
+    upToFeature=
+    mdb.models['Model-1'].parts['Concrete'].features['Solid extrude-1'])
+del mdb.models['Model-1'].sketches['__edit__']
+mdb.jobs['Job-1'].submit(consistencyChecking=OFF, datacheckJob=True)
+mdb.jobs['Job-1']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'USER-20161022CS', 'handle': 0, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OVERCONSTRAINT CHECKS: THE *TIE PAIR BETWEEN SURFACES ASSEMBLY_LOADSUPPORTER-1-LIN-1-2_S_SURF-7 AND ASSEMBLY_M_SURF-7 ATTEMPTS TO TIE ONE DEFORMABLE AND ONE RIGID BODY. SINCE THE *TIE SLAVE SURFACE BELONGS IN PART OR ENTIRELY TO THE RIGID BODY, THE NODES ON THIS SURFACE WOULD BE OVERCONSTRAINED  BY THE *RIGID BODY AND *TIE COMBINATION. THE SLAVE AND MASTER ARE SWITCHED SO THAT OVERCONSTRAINTS ARE AVOIDED.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OVERCONSTRAINT CHECKS: THE *TIE PAIR BETWEEN SURFACES ASSEMBLY_LOADSUPPORTER-1-LIN-1-2-LIN-2-1_S_SURF-9 AND ASSEMBLY_M_SURF-9 ATTEMPTS TO TIE ONE DEFORMABLE AND ONE RIGID BODY. SINCE THE *TIE SLAVE SURFACE BELONGS IN PART OR ENTIRELY TO THE RIGID BODY, THE NODES ON THIS SURFACE WOULD BE OVERCONSTRAINED  BY THE *RIGID BODY AND *TIE COMBINATION. THE SLAVE AND MASTER ARE SWITCHED SO THAT OVERCONSTRAINTS ARE AVOIDED.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(COMPLETED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OVERCONSTRAINT CHECKS: THE *TIE PAIR BETWEEN SURFACES ASSEMBLY_LOADSUPPORTER-1_S_SURF-1 AND ASSEMBLY_M_SURF-3 ATTEMPTS TO TIE ONE DEFORMABLE AND ONE RIGID BODY. SINCE THE *TIE SLAVE SURFACE BELONGS IN PART OR ENTIRELY TO THE RIGID BODY, THE NODES ON THIS SURFACE WOULD BE OVERCONSTRAINED  BY THE *RIGID BODY AND *TIE COMBINATION. THE SLAVE AND MASTER ARE SWITCHED SO THAT OVERCONSTRAINTS ARE AVOIDED.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OVERCONSTRAINT CHECKS: THE *TIE PAIR BETWEEN SURFACES ASSEMBLY_LOADSUPPORTER-1-LIN-1-2-LIN-1-2_S_SURF-5 AND ASSEMBLY_M_SURF-5 ATTEMPTS TO TIE ONE DEFORMABLE AND ONE RIGID BODY. SINCE THE *TIE SLAVE SURFACE BELONGS IN PART OR ENTIRELY TO THE RIGID BODY, THE NODES ON THIS SURFACE WOULD BE OVERCONSTRAINED  BY THE *RIGID BODY AND *TIE COMBINATION. THE SLAVE AND MASTER ARE SWITCHED SO THAT OVERCONSTRAINTS ARE AVOIDED.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ODB_FILE, {'phase': BATCHPRE_PHASE, 
+    'file': 'F:\\temp\\Job-1.odb', 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STARTED, {'phase': STANDARD_PHASE, 
+    'clientHost': 'USER-20161022CS', 'handle': 12664, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STEP, {'stepName': 'load', 'phase': STANDARD_PHASE, 
+    'stepId': 1, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 0, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.0, 'attempts': 0, 
+    'timeIncrement': 1.0, 'increment': 0, 'stepTime': 0.0, 'step': 1, 
+    'jobName': 'Job-1', 'severe': 0, 'iterations': 0, 'phase': STANDARD_PHASE, 
+    'equilibrium': 0})
+mdb.jobs['Job-1']._Message(MEMORY_ESTIMATE, {'phase': STANDARD_PHASE, 
+    'jobName': 'Job-1', 'memory': 19.7719631195068})
+mdb.jobs['Job-1']._Message(COMPLETED, {'phase': STANDARD_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(JOB_COMPLETED, {'time': 'Sat Nov 21 09:13:10 2020', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1'].submit(consistencyChecking=OFF, continueJob=True)
+mdb.jobs['Job-1']._Message(STARTED, {'phase': STANDARD_PHASE, 
+    'clientHost': 'USER-20161022CS', 'handle': 8196, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STEP, {'stepName': 'load', 'phase': STANDARD_PHASE, 
+    'stepId': 1, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(MEMORY_ESTIMATE, {'phase': STANDARD_PHASE, 
+    'jobName': 'Job-1', 'memory': 38.6048946380615})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': STANDARD_PHASE, 
+    'message': 'THE STRAIN INCREMENT IS SO LARGE THAT THE PROGRAM WILL NOT ATTEMPT THE PLASTICITY CALCULATION AT 2 POINTS', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': STANDARD_PHASE, 
+    'message': 'THE PLASTICITY/CREEP/CONNECTOR FRICTION ALGORITHM DID NOT CONVERGE AT 2 POINTS', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.0, 'attempts': ' 1U', 
+    'timeIncrement': 1.0, 'increment': 1, 'stepTime': 0.0, 'step': 1, 
+    'jobName': 'Job-1', 'severe': 0, 'iterations': 2, 'phase': STANDARD_PHASE, 
+    'equilibrium': 2})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': STANDARD_PHASE, 
+    'message': 'THE STRAIN INCREMENT IS SO LARGE THAT THE PROGRAM WILL NOT ATTEMPT THE PLASTICITY CALCULATION AT 30 POINTS', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.0, 'attempts': ' 2U', 
+    'timeIncrement': 0.25, 'increment': 1, 'stepTime': 0.0, 'step': 1, 
+    'jobName': 'Job-1', 'severe': 0, 'iterations': 3, 'phase': STANDARD_PHASE, 
+    'equilibrium': 3})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.0, 'attempts': ' 3U', 
+    'timeIncrement': 0.0625, 'increment': 1, 'stepTime': 0.0, 'step': 1, 
+    'jobName': 'Job-1', 'severe': 0, 'iterations': 4, 'phase': STANDARD_PHASE, 
+    'equilibrium': 4})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 1, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.015625, 'attempts': 4, 
+    'timeIncrement': 0.015625, 'increment': 1, 'stepTime': 0.015625, 'step': 1, 
+    'jobName': 'Job-1', 'severe': 0, 'iterations': 5, 'phase': STANDARD_PHASE, 
+    'equilibrium': 5})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 2, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.03125, 'attempts': 1, 
+    'timeIncrement': 0.015625, 'increment': 2, 'stepTime': 0.03125, 'step': 1, 
+    'jobName': 'Job-1', 'severe': 0, 'iterations': 5, 'phase': STANDARD_PHASE, 
+    'equilibrium': 5})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 3, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.046875, 'attempts': 1, 
+    'timeIncrement': 0.015625, 'increment': 3, 'stepTime': 0.046875, 'step': 1, 
+    'jobName': 'Job-1', 'severe': 0, 'iterations': 4, 'phase': STANDARD_PHASE, 
+    'equilibrium': 4})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 4, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.0625, 'attempts': 1, 
+    'timeIncrement': 0.015625, 'increment': 4, 'stepTime': 0.0625, 'step': 1, 
+    'jobName': 'Job-1', 'severe': 0, 'iterations': 3, 'phase': STANDARD_PHASE, 
+    'equilibrium': 3})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 5, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.0859375, 'attempts': 1, 
+    'timeIncrement': 0.0234375, 'increment': 5, 'stepTime': 0.0859375, 
+    'step': 1, 'jobName': 'Job-1', 'severe': 0, 'iterations': 3, 
+    'phase': STANDARD_PHASE, 'equilibrium': 3})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 6, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.12109375, 'attempts': 1, 
+    'timeIncrement': 0.03515625, 'increment': 6, 'stepTime': 0.12109375, 
+    'step': 1, 'jobName': 'Job-1', 'severe': 0, 'iterations': 5, 
+    'phase': STANDARD_PHASE, 'equilibrium': 5})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 7, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.15625, 'attempts': 1, 
+    'timeIncrement': 0.03515625, 'increment': 7, 'stepTime': 0.15625, 
+    'step': 1, 'jobName': 'Job-1', 'severe': 0, 'iterations': 6, 
+    'phase': STANDARD_PHASE, 'equilibrium': 6})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 8, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.19140625, 'attempts': 1, 
+    'timeIncrement': 0.03515625, 'increment': 8, 'stepTime': 0.19140625, 
+    'step': 1, 'jobName': 'Job-1', 'severe': 0, 'iterations': 3, 
+    'phase': STANDARD_PHASE, 'equilibrium': 3})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 9, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.2265625, 'attempts': 1, 
+    'timeIncrement': 0.03515625, 'increment': 9, 'stepTime': 0.2265625, 
+    'step': 1, 'jobName': 'Job-1', 'severe': 0, 'iterations': 4, 
+    'phase': STANDARD_PHASE, 'equilibrium': 4})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.2265625, 'attempts': ' 1U', 
+    'timeIncrement': 0.052734375, 'increment': 10, 'stepTime': 0.2265625, 
+    'step': 1, 'jobName': 'Job-1', 'severe': 0, 'iterations': 5, 
+    'phase': STANDARD_PHASE, 'equilibrium': 5})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 10, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.23974609375, 'attempts': 2, 
+    'timeIncrement': 0.01318359375, 'increment': 10, 'stepTime': 0.23974609375, 
+    'step': 1, 'jobName': 'Job-1', 'severe': 0, 'iterations': 3, 
+    'phase': STANDARD_PHASE, 'equilibrium': 3})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 11, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.259521484375, 'attempts': 1, 
+    'timeIncrement': 0.019775390625, 'increment': 11, 
+    'stepTime': 0.259521484375, 'step': 1, 'jobName': 'Job-1', 'severe': 0, 
+    'iterations': 3, 'phase': STANDARD_PHASE, 'equilibrium': 3})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 12, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.2891845703125, 
+    'attempts': 1, 'timeIncrement': 0.0296630859375, 'increment': 12, 
+    'stepTime': 0.2891845703125, 'step': 1, 'jobName': 'Job-1', 'severe': 0, 
+    'iterations': 3, 'phase': STANDARD_PHASE, 'equilibrium': 3})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 13, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.33367919921875, 
+    'attempts': 1, 'timeIncrement': 0.04449462890625, 'increment': 13, 
+    'stepTime': 0.33367919921875, 'step': 1, 'jobName': 'Job-1', 'severe': 0, 
+    'iterations': 3, 'phase': STANDARD_PHASE, 'equilibrium': 3})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 14, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.400421142578125, 
+    'attempts': 1, 'timeIncrement': 0.066741943359375, 'increment': 14, 
+    'stepTime': 0.400421142578125, 'step': 1, 'jobName': 'Job-1', 'severe': 0, 
+    'iterations': 4, 'phase': STANDARD_PHASE, 'equilibrium': 4})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 15, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.500534057617188, 
+    'attempts': 1, 'timeIncrement': 0.100112915039063, 'increment': 15, 
+    'stepTime': 0.500534057617188, 'step': 1, 'jobName': 'Job-1', 'severe': 0, 
+    'iterations': 4, 'phase': STANDARD_PHASE, 'equilibrium': 4})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 16, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.650703430175781, 
+    'attempts': 1, 'timeIncrement': 0.150169372558594, 'increment': 16, 
+    'stepTime': 0.650703430175781, 'step': 1, 'jobName': 'Job-1', 'severe': 0, 
+    'iterations': 3, 'phase': STANDARD_PHASE, 'equilibrium': 3})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 17, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.875957489013672, 
+    'attempts': 1, 'timeIncrement': 0.225254058837891, 'increment': 17, 
+    'stepTime': 0.875957489013672, 'step': 1, 'jobName': 'Job-1', 'severe': 0, 
+    'iterations': 4, 'phase': STANDARD_PHASE, 'equilibrium': 4})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 18, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 1.0, 'attempts': 1, 
+    'timeIncrement': 0.124042510986328, 'increment': 18, 'stepTime': 1.0, 
+    'step': 1, 'jobName': 'Job-1', 'severe': 0, 'iterations': 3, 
+    'phase': STANDARD_PHASE, 'equilibrium': 3})
+mdb.jobs['Job-1']._Message(END_STEP, {'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(COMPLETED, {'phase': STANDARD_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(JOB_COMPLETED, {'time': 'Sat Nov 21 09:14:12 2020', 
+    'jobName': 'Job-1'})
+mdb.models['Model-1'].boundaryConditions['BC-3'].setValues(u2=-0.005)
+mdb.models['Model-1'].boundaryConditions['BC-4'].setValues(u2=-0.005)
+mdb.models['Model-1'].parts['Concrete'].deleteMesh()
+mdb.models['Model-1'].parts['Concrete'].seedPart(deviationFactor=0.1, 
+    minSizeFactor=0.1, size=0.01)
+mdb.models['Model-1'].parts['Concrete'].generateMesh()
+mdb.models['Model-1'].rootAssembly.regenerate()
+mdb.jobs['Job-1'].submit(consistencyChecking=OFF)
+mdb.jobs['Job-1']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'USER-20161022CS', 'handle': 0, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OVERCONSTRAINT CHECKS: THE *TIE PAIR BETWEEN SURFACES ASSEMBLY_LOADSUPPORTER-1-LIN-1-2_S_SURF-7 AND ASSEMBLY_M_SURF-7 ATTEMPTS TO TIE ONE DEFORMABLE AND ONE RIGID BODY. SINCE THE *TIE SLAVE SURFACE BELONGS IN PART OR ENTIRELY TO THE RIGID BODY, THE NODES ON THIS SURFACE WOULD BE OVERCONSTRAINED  BY THE *RIGID BODY AND *TIE COMBINATION. THE SLAVE AND MASTER ARE SWITCHED SO THAT OVERCONSTRAINTS ARE AVOIDED.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OVERCONSTRAINT CHECKS: THE *TIE PAIR BETWEEN SURFACES ASSEMBLY_LOADSUPPORTER-1-LIN-1-2-LIN-2-1_S_SURF-9 AND ASSEMBLY_M_SURF-9 ATTEMPTS TO TIE ONE DEFORMABLE AND ONE RIGID BODY. SINCE THE *TIE SLAVE SURFACE BELONGS IN PART OR ENTIRELY TO THE RIGID BODY, THE NODES ON THIS SURFACE WOULD BE OVERCONSTRAINED  BY THE *RIGID BODY AND *TIE COMBINATION. THE SLAVE AND MASTER ARE SWITCHED SO THAT OVERCONSTRAINTS ARE AVOIDED.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OVERCONSTRAINT CHECKS: THE *TIE PAIR BETWEEN SURFACES ASSEMBLY_LOADSUPPORTER-1_S_SURF-1 AND ASSEMBLY_M_SURF-3 ATTEMPTS TO TIE ONE DEFORMABLE AND ONE RIGID BODY. SINCE THE *TIE SLAVE SURFACE BELONGS IN PART OR ENTIRELY TO THE RIGID BODY, THE NODES ON THIS SURFACE WOULD BE OVERCONSTRAINED  BY THE *RIGID BODY AND *TIE COMBINATION. THE SLAVE AND MASTER ARE SWITCHED SO THAT OVERCONSTRAINTS ARE AVOIDED.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OVERCONSTRAINT CHECKS: THE *TIE PAIR BETWEEN SURFACES ASSEMBLY_LOADSUPPORTER-1-LIN-1-2-LIN-1-2_S_SURF-5 AND ASSEMBLY_M_SURF-5 ATTEMPTS TO TIE ONE DEFORMABLE AND ONE RIGID BODY. SINCE THE *TIE SLAVE SURFACE BELONGS IN PART OR ENTIRELY TO THE RIGID BODY, THE NODES ON THIS SURFACE WOULD BE OVERCONSTRAINED  BY THE *RIGID BODY AND *TIE COMBINATION. THE SLAVE AND MASTER ARE SWITCHED SO THAT OVERCONSTRAINTS ARE AVOIDED.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_M_SURF-7-ASSEMBLY_LOADSUPPORTER-1-LIN-1-2_S_SURF-7), NOT ALL THE NODES THAT HAVE BEEN ADJUSTED WERE PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_M_SURF-9-ASSEMBLY_LOADSUPPORTER-1-LIN-1-2-LIN-2-1_S_SURF-9), NOT ALL THE NODES THAT HAVE BEEN ADJUSTED WERE PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_M_SURF-3-ASSEMBLY_LOADSUPPORTER-1_S_SURF-1), NOT ALL THE NODES THAT HAVE BEEN ADJUSTED WERE PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_M_SURF-5-ASSEMBLY_LOADSUPPORTER-1-LIN-1-2-LIN-1-2_S_SURF-5), NOT ALL THE NODES THAT HAVE BEEN ADJUSTED WERE PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE NODE 2 INSTANCE CONCRETE-1 WILL NOT BE TIED TO THE MASTER SURFACE ASSEMBLY_LOADSUPPORTER-1-LIN-1-2_S_SURF-7. THE DISTANCE FROM THE MASTER SURFACE IS GREATER THAN THE POSITION TOLERANCE VALUE.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE NODE 5 INSTANCE CONCRETE-1 WILL NOT BE TIED TO THE MASTER SURFACE ASSEMBLY_LOADSUPPORTER-1-LIN-1-2_S_SURF-7. THE DISTANCE FROM THE MASTER SURFACE IS GREATER THAN THE POSITION TOLERANCE VALUE.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE NODE 9 INSTANCE CONCRETE-1 WILL NOT BE TIED TO THE MASTER SURFACE ASSEMBLY_LOADSUPPORTER-1-LIN-1-2_S_SURF-7. THE DISTANCE FROM THE MASTER SURFACE IS GREATER THAN THE POSITION TOLERANCE VALUE.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE NODE 16 INSTANCE CONCRETE-1 WILL NOT BE TIED TO THE MASTER SURFACE ASSEMBLY_LOADSUPPORTER-1-LIN-1-2_S_SURF-7. THE DISTANCE FROM THE MASTER SURFACE IS GREATER THAN THE POSITION TOLERANCE VALUE.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE NODE 270 INSTANCE CONCRETE-1 WILL NOT BE TIED TO THE MASTER SURFACE ASSEMBLY_LOADSUPPORTER-1-LIN-1-2_S_SURF-7. THE DISTANCE FROM THE MASTER SURFACE IS GREATER THAN THE POSITION TOLERANCE VALUE.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE NODE 271 INSTANCE CONCRETE-1 WILL NOT BE TIED TO THE MASTER SURFACE ASSEMBLY_LOADSUPPORTER-1-LIN-1-2_S_SURF-7. THE DISTANCE FROM THE MASTER SURFACE IS GREATER THAN THE POSITION TOLERANCE VALUE.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE NODE 272 INSTANCE CONCRETE-1 WILL NOT BE TIED TO THE MASTER SURFACE ASSEMBLY_LOADSUPPORTER-1-LIN-1-2_S_SURF-7. THE DISTANCE FROM THE MASTER SURFACE IS GREATER THAN THE POSITION TOLERANCE VALUE.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE NODE 273 INSTANCE CONCRETE-1 WILL NOT BE TIED TO THE MASTER SURFACE ASSEMBLY_LOADSUPPORTER-1-LIN-1-2_S_SURF-7. THE DISTANCE FROM THE MASTER SURFACE IS GREATER THAN THE POSITION TOLERANCE VALUE.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE NODE 274 INSTANCE CONCRETE-1 WILL NOT BE TIED TO THE MASTER SURFACE ASSEMBLY_LOADSUPPORTER-1-LIN-1-2_S_SURF-7. THE DISTANCE FROM THE MASTER SURFACE IS GREATER THAN THE POSITION TOLERANCE VALUE.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE NODE 275 INSTANCE CONCRETE-1 WILL NOT BE TIED TO THE MASTER SURFACE ASSEMBLY_LOADSUPPORTER-1-LIN-1-2_S_SURF-7. THE DISTANCE FROM THE MASTER SURFACE IS GREATER THAN THE POSITION TOLERANCE VALUE.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE NODE 276 INSTANCE CONCRETE-1 WILL NOT BE TIED TO THE MASTER SURFACE ASSEMBLY_LOADSUPPORTER-1-LIN-1-2_S_SURF-7. THE DISTANCE FROM THE MASTER SURFACE IS GREATER THAN THE POSITION TOLERANCE VALUE.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE NODE 30 INSTANCE CONCRETE-1 WILL NOT BE TIED TO THE MASTER SURFACE ASSEMBLY_LOADSUPPORTER-1-LIN-1-2-LIN-2-1_S_SURF-9. THE DISTANCE FROM THE MASTER SURFACE IS GREATER THAN THE POSITION TOLERANCE VALUE.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE NODE 31 INSTANCE CONCRETE-1 WILL NOT BE TIED TO THE MASTER SURFACE ASSEMBLY_LOADSUPPORTER-1-LIN-1-2-LIN-2-1_S_SURF-9. THE DISTANCE FROM THE MASTER SURFACE IS GREATER THAN THE POSITION TOLERANCE VALUE.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE NODE 33 INSTANCE CONCRETE-1 WILL NOT BE TIED TO THE MASTER SURFACE ASSEMBLY_LOADSUPPORTER-1-LIN-1-2-LIN-2-1_S_SURF-9. THE DISTANCE FROM THE MASTER SURFACE IS GREATER THAN THE POSITION TOLERANCE VALUE.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE NODE 34 INSTANCE CONCRETE-1 WILL NOT BE TIED TO THE MASTER SURFACE ASSEMBLY_LOADSUPPORTER-1-LIN-1-2-LIN-2-1_S_SURF-9. THE DISTANCE FROM THE MASTER SURFACE IS GREATER THAN THE POSITION TOLERANCE VALUE.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE NODE 1419 INSTANCE CONCRETE-1 WILL NOT BE TIED TO THE MASTER SURFACE ASSEMBLY_LOADSUPPORTER-1-LIN-1-2-LIN-2-1_S_SURF-9. THE DISTANCE FROM THE MASTER SURFACE IS GREATER THAN THE POSITION TOLERANCE VALUE.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE NODE 1420 INSTANCE CONCRETE-1 WILL NOT BE TIED TO THE MASTER SURFACE ASSEMBLY_LOADSUPPORTER-1-LIN-1-2-LIN-2-1_S_SURF-9. THE DISTANCE FROM THE MASTER SURFACE IS GREATER THAN THE POSITION TOLERANCE VALUE.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE NODE 1421 INSTANCE CONCRETE-1 WILL NOT BE TIED TO THE MASTER SURFACE ASSEMBLY_LOADSUPPORTER-1-LIN-1-2-LIN-2-1_S_SURF-9. THE DISTANCE FROM THE MASTER SURFACE IS GREATER THAN THE POSITION TOLERANCE VALUE.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE NODE 1422 INSTANCE CONCRETE-1 WILL NOT BE TIED TO THE MASTER SURFACE ASSEMBLY_LOADSUPPORTER-1-LIN-1-2-LIN-2-1_S_SURF-9. THE DISTANCE FROM THE MASTER SURFACE IS GREATER THAN THE POSITION TOLERANCE VALUE.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE NODE 1423 INSTANCE CONCRETE-1 WILL NOT BE TIED TO THE MASTER SURFACE ASSEMBLY_LOADSUPPORTER-1-LIN-1-2-LIN-2-1_S_SURF-9. THE DISTANCE FROM THE MASTER SURFACE IS GREATER THAN THE POSITION TOLERANCE VALUE.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE NODE 1424 INSTANCE CONCRETE-1 WILL NOT BE TIED TO THE MASTER SURFACE ASSEMBLY_LOADSUPPORTER-1-LIN-1-2-LIN-2-1_S_SURF-9. THE DISTANCE FROM THE MASTER SURFACE IS GREATER THAN THE POSITION TOLERANCE VALUE.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE NODE 1425 INSTANCE CONCRETE-1 WILL NOT BE TIED TO THE MASTER SURFACE ASSEMBLY_LOADSUPPORTER-1-LIN-1-2-LIN-2-1_S_SURF-9. THE DISTANCE FROM THE MASTER SURFACE IS GREATER THAN THE POSITION TOLERANCE VALUE.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE NODE 11 INSTANCE CONCRETE-1 WILL NOT BE TIED TO THE MASTER SURFACE ASSEMBLY_LOADSUPPORTER-1_S_SURF-1. THE DISTANCE FROM THE MASTER SURFACE IS GREATER THAN THE POSITION TOLERANCE VALUE.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE NODE 14 INSTANCE CONCRETE-1 WILL NOT BE TIED TO THE MASTER SURFACE ASSEMBLY_LOADSUPPORTER-1_S_SURF-1. THE DISTANCE FROM THE MASTER SURFACE IS GREATER THAN THE POSITION TOLERANCE VALUE.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ODB_FILE, {'phase': BATCHPRE_PHASE, 
+    'file': 'F:\\temp\\Job-1.odb', 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE NODE 18 INSTANCE CONCRETE-1 WILL NOT BE TIED TO THE MASTER SURFACE ASSEMBLY_LOADSUPPORTER-1_S_SURF-1. THE DISTANCE FROM THE MASTER SURFACE IS GREATER THAN THE POSITION TOLERANCE VALUE.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(COMPLETED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE NODE 20 INSTANCE CONCRETE-1 WILL NOT BE TIED TO THE MASTER SURFACE ASSEMBLY_LOADSUPPORTER-1_S_SURF-1. THE DISTANCE FROM THE MASTER SURFACE IS GREATER THAN THE POSITION TOLERANCE VALUE.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE NODE 539 INSTANCE CONCRETE-1 WILL NOT BE TIED TO THE MASTER SURFACE ASSEMBLY_LOADSUPPORTER-1_S_SURF-1. THE DISTANCE FROM THE MASTER SURFACE IS GREATER THAN THE POSITION TOLERANCE VALUE.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE NODE 540 INSTANCE CONCRETE-1 WILL NOT BE TIED TO THE MASTER SURFACE ASSEMBLY_LOADSUPPORTER-1_S_SURF-1. THE DISTANCE FROM THE MASTER SURFACE IS GREATER THAN THE POSITION TOLERANCE VALUE.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE NODE 541 INSTANCE CONCRETE-1 WILL NOT BE TIED TO THE MASTER SURFACE ASSEMBLY_LOADSUPPORTER-1_S_SURF-1. THE DISTANCE FROM THE MASTER SURFACE IS GREATER THAN THE POSITION TOLERANCE VALUE.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE NODE 542 INSTANCE CONCRETE-1 WILL NOT BE TIED TO THE MASTER SURFACE ASSEMBLY_LOADSUPPORTER-1_S_SURF-1. THE DISTANCE FROM THE MASTER SURFACE IS GREATER THAN THE POSITION TOLERANCE VALUE.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE NODE 543 INSTANCE CONCRETE-1 WILL NOT BE TIED TO THE MASTER SURFACE ASSEMBLY_LOADSUPPORTER-1_S_SURF-1. THE DISTANCE FROM THE MASTER SURFACE IS GREATER THAN THE POSITION TOLERANCE VALUE.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE NODE 544 INSTANCE CONCRETE-1 WILL NOT BE TIED TO THE MASTER SURFACE ASSEMBLY_LOADSUPPORTER-1_S_SURF-1. THE DISTANCE FROM THE MASTER SURFACE IS GREATER THAN THE POSITION TOLERANCE VALUE.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE NODE 545 INSTANCE CONCRETE-1 WILL NOT BE TIED TO THE MASTER SURFACE ASSEMBLY_LOADSUPPORTER-1_S_SURF-1. THE DISTANCE FROM THE MASTER SURFACE IS GREATER THAN THE POSITION TOLERANCE VALUE.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE NODE 21 INSTANCE CONCRETE-1 WILL NOT BE TIED TO THE MASTER SURFACE ASSEMBLY_LOADSUPPORTER-1-LIN-1-2-LIN-1-2_S_SURF-5. THE DISTANCE FROM THE MASTER SURFACE IS GREATER THAN THE POSITION TOLERANCE VALUE.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE NODE 24 INSTANCE CONCRETE-1 WILL NOT BE TIED TO THE MASTER SURFACE ASSEMBLY_LOADSUPPORTER-1-LIN-1-2-LIN-1-2_S_SURF-5. THE DISTANCE FROM THE MASTER SURFACE IS GREATER THAN THE POSITION TOLERANCE VALUE.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE NODE 27 INSTANCE CONCRETE-1 WILL NOT BE TIED TO THE MASTER SURFACE ASSEMBLY_LOADSUPPORTER-1-LIN-1-2-LIN-1-2_S_SURF-5. THE DISTANCE FROM THE MASTER SURFACE IS GREATER THAN THE POSITION TOLERANCE VALUE.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE NODE 28 INSTANCE CONCRETE-1 WILL NOT BE TIED TO THE MASTER SURFACE ASSEMBLY_LOADSUPPORTER-1-LIN-1-2-LIN-1-2_S_SURF-5. THE DISTANCE FROM THE MASTER SURFACE IS GREATER THAN THE POSITION TOLERANCE VALUE.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE NODE 897 INSTANCE CONCRETE-1 WILL NOT BE TIED TO THE MASTER SURFACE ASSEMBLY_LOADSUPPORTER-1-LIN-1-2-LIN-1-2_S_SURF-5. THE DISTANCE FROM THE MASTER SURFACE IS GREATER THAN THE POSITION TOLERANCE VALUE.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE NODE 898 INSTANCE CONCRETE-1 WILL NOT BE TIED TO THE MASTER SURFACE ASSEMBLY_LOADSUPPORTER-1-LIN-1-2-LIN-1-2_S_SURF-5. THE DISTANCE FROM THE MASTER SURFACE IS GREATER THAN THE POSITION TOLERANCE VALUE.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE NODE 899 INSTANCE CONCRETE-1 WILL NOT BE TIED TO THE MASTER SURFACE ASSEMBLY_LOADSUPPORTER-1-LIN-1-2-LIN-1-2_S_SURF-5. THE DISTANCE FROM THE MASTER SURFACE IS GREATER THAN THE POSITION TOLERANCE VALUE.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE NODE 900 INSTANCE CONCRETE-1 WILL NOT BE TIED TO THE MASTER SURFACE ASSEMBLY_LOADSUPPORTER-1-LIN-1-2-LIN-1-2_S_SURF-5. THE DISTANCE FROM THE MASTER SURFACE IS GREATER THAN THE POSITION TOLERANCE VALUE.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE NODE 901 INSTANCE CONCRETE-1 WILL NOT BE TIED TO THE MASTER SURFACE ASSEMBLY_LOADSUPPORTER-1-LIN-1-2-LIN-1-2_S_SURF-5. THE DISTANCE FROM THE MASTER SURFACE IS GREATER THAN THE POSITION TOLERANCE VALUE.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE NODE 902 INSTANCE CONCRETE-1 WILL NOT BE TIED TO THE MASTER SURFACE ASSEMBLY_LOADSUPPORTER-1-LIN-1-2-LIN-1-2_S_SURF-5. THE DISTANCE FROM THE MASTER SURFACE IS GREATER THAN THE POSITION TOLERANCE VALUE.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'SLAVE NODE 903 INSTANCE CONCRETE-1 WILL NOT BE TIED TO THE MASTER SURFACE ASSEMBLY_LOADSUPPORTER-1-LIN-1-2-LIN-1-2_S_SURF-5. THE DISTANCE FROM THE MASTER SURFACE IS GREATER THAN THE POSITION TOLERANCE VALUE.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '168 nodes are either missing intersection with their respective master surface or are outside the adjust zone. The nodes have been identified in node set WarnNodeMissMasterIntersect.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STARTED, {'phase': STANDARD_PHASE, 
+    'clientHost': 'USER-20161022CS', 'handle': 13284, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STEP, {'stepName': 'load', 'phase': STANDARD_PHASE, 
+    'stepId': 1, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 0, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.0, 'attempts': 0, 
+    'timeIncrement': 1.0, 'increment': 0, 'stepTime': 0.0, 'step': 1, 
+    'jobName': 'Job-1', 'severe': 0, 'iterations': 0, 'phase': STANDARD_PHASE, 
+    'equilibrium': 0})
+mdb.jobs['Job-1']._Message(MEMORY_ESTIMATE, {'phase': STANDARD_PHASE, 
+    'jobName': 'Job-1', 'memory': 6532.49187278748})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': STANDARD_PHASE, 
+    'message': 'THE STRAIN INCREMENT IS SO LARGE THAT THE PROGRAM WILL NOT ATTEMPT THE PLASTICITY CALCULATION AT 140 POINTS', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': STANDARD_PHASE, 
+    'message': 'THE PLASTICITY/CREEP/CONNECTOR FRICTION ALGORITHM DID NOT CONVERGE AT 28 POINTS', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.0, 'attempts': ' 1U', 
+    'timeIncrement': 1.0, 'increment': 1, 'stepTime': 0.0, 'step': 1, 
+    'jobName': 'Job-1', 'severe': 0, 'iterations': 2, 'phase': STANDARD_PHASE, 
+    'equilibrium': 2})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': STANDARD_PHASE, 
+    'message': 'THE STRAIN INCREMENT IS SO LARGE THAT THE PROGRAM WILL NOT ATTEMPT THE PLASTICITY CALCULATION AT 4 POINTS', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': STANDARD_PHASE, 
+    'message': 'THE PLASTICITY/CREEP/CONNECTOR FRICTION ALGORITHM DID NOT CONVERGE AT 16 POINTS', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.0, 'attempts': ' 2U', 
+    'timeIncrement': 0.25, 'increment': 1, 'stepTime': 0.0, 'step': 1, 
+    'jobName': 'Job-1', 'severe': 0, 'iterations': 3, 'phase': STANDARD_PHASE, 
+    'equilibrium': 3})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': STANDARD_PHASE, 
+    'message': 'Process terminated by external request (SIGTERM or SIGINT received).', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {'phase': STANDARD_PHASE, 
+    'message': 'Process terminated by external request (SIGTERM or SIGINT received).', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(INTERRUPTED, {'phase': STANDARD_PHASE, 
+    'message': 'Analysis interrupted by external signal', 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(INTERRUPTED, {'phase': STANDARD_PHASE, 
+    'message': 'Analysis interrupted by external signal', 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ERROR, {
+    'message': 'Abaqus/Standard Analysis exited with an error - Please see the  message file for possible error messages if the file exists.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(JOB_ABORTED, {
+    'message': 'Abaqus/Standard Analysis exited with an error - Please see the  message file for possible error messages if the file exists.', 
+    'jobName': 'Job-1'})
+mdb.models['Model-1'].parts['Concrete'].deleteMesh()
+mdb.models['Model-1'].parts['Concrete'].seedPart(deviationFactor=0.1, 
+    minSizeFactor=0.1, size=0.03)
+mdb.models['Model-1'].parts['Concrete'].generateMesh()
+mdb.models['Model-1'].rootAssembly.regenerate()
+mdb.models['Model-1'].historyOutputRequests['H-Output-2'].setValues(variables=(
+    'PEEQ', 'PEEQT', 'RF1', 'RF2', 'RF3'))
+mdb.jobs['Job-1'].submit(consistencyChecking=OFF)
+mdb.jobs['Job-1']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'USER-20161022CS', 'handle': 0, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OVERCONSTRAINT CHECKS: THE *TIE PAIR BETWEEN SURFACES ASSEMBLY_LOADSUPPORTER-1-LIN-1-2_S_SURF-7 AND ASSEMBLY_M_SURF-7 ATTEMPTS TO TIE ONE DEFORMABLE AND ONE RIGID BODY. SINCE THE *TIE SLAVE SURFACE BELONGS IN PART OR ENTIRELY TO THE RIGID BODY, THE NODES ON THIS SURFACE WOULD BE OVERCONSTRAINED  BY THE *RIGID BODY AND *TIE COMBINATION. THE SLAVE AND MASTER ARE SWITCHED SO THAT OVERCONSTRAINTS ARE AVOIDED.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OVERCONSTRAINT CHECKS: THE *TIE PAIR BETWEEN SURFACES ASSEMBLY_LOADSUPPORTER-1-LIN-1-2-LIN-2-1_S_SURF-9 AND ASSEMBLY_M_SURF-9 ATTEMPTS TO TIE ONE DEFORMABLE AND ONE RIGID BODY. SINCE THE *TIE SLAVE SURFACE BELONGS IN PART OR ENTIRELY TO THE RIGID BODY, THE NODES ON THIS SURFACE WOULD BE OVERCONSTRAINED  BY THE *RIGID BODY AND *TIE COMBINATION. THE SLAVE AND MASTER ARE SWITCHED SO THAT OVERCONSTRAINTS ARE AVOIDED.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OVERCONSTRAINT CHECKS: THE *TIE PAIR BETWEEN SURFACES ASSEMBLY_LOADSUPPORTER-1_S_SURF-1 AND ASSEMBLY_M_SURF-3 ATTEMPTS TO TIE ONE DEFORMABLE AND ONE RIGID BODY. SINCE THE *TIE SLAVE SURFACE BELONGS IN PART OR ENTIRELY TO THE RIGID BODY, THE NODES ON THIS SURFACE WOULD BE OVERCONSTRAINED  BY THE *RIGID BODY AND *TIE COMBINATION. THE SLAVE AND MASTER ARE SWITCHED SO THAT OVERCONSTRAINTS ARE AVOIDED.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OVERCONSTRAINT CHECKS: THE *TIE PAIR BETWEEN SURFACES ASSEMBLY_LOADSUPPORTER-1-LIN-1-2-LIN-1-2_S_SURF-5 AND ASSEMBLY_M_SURF-5 ATTEMPTS TO TIE ONE DEFORMABLE AND ONE RIGID BODY. SINCE THE *TIE SLAVE SURFACE BELONGS IN PART OR ENTIRELY TO THE RIGID BODY, THE NODES ON THIS SURFACE WOULD BE OVERCONSTRAINED  BY THE *RIGID BODY AND *TIE COMBINATION. THE SLAVE AND MASTER ARE SWITCHED SO THAT OVERCONSTRAINTS ARE AVOIDED.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_M_SURF-7-ASSEMBLY_LOADSUPPORTER-1-LIN-1-2_S_SURF-7), NOT ALL THE NODES THAT HAVE BEEN ADJUSTED WERE PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_M_SURF-9-ASSEMBLY_LOADSUPPORTER-1-LIN-1-2-LIN-2-1_S_SURF-9), NOT ALL THE NODES THAT HAVE BEEN ADJUSTED WERE PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_M_SURF-3-ASSEMBLY_LOADSUPPORTER-1_S_SURF-1), NOT ALL THE NODES THAT HAVE BEEN ADJUSTED WERE PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'FOR *TIE PAIR (ASSEMBLY_M_SURF-5-ASSEMBLY_LOADSUPPORTER-1-LIN-1-2-LIN-1-2_S_SURF-5), NOT ALL THE NODES THAT HAVE BEEN ADJUSTED WERE PRINTED. SPECIFY *PREPRINT,MODEL=YES FOR COMPLETE PRINTOUT.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ODB_FILE, {'phase': BATCHPRE_PHASE, 
+    'file': 'F:\\temp\\Job-1.odb', 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(COMPLETED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STARTED, {'phase': STANDARD_PHASE, 
+    'clientHost': 'USER-20161022CS', 'handle': 6344, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STEP, {'stepName': 'load', 'phase': STANDARD_PHASE, 
+    'stepId': 1, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 0, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.0, 'attempts': 0, 
+    'timeIncrement': 1.0, 'increment': 0, 'stepTime': 0.0, 'step': 1, 
+    'jobName': 'Job-1', 'severe': 0, 'iterations': 0, 'phase': STANDARD_PHASE, 
+    'equilibrium': 0})
+mdb.jobs['Job-1']._Message(MEMORY_ESTIMATE, {'phase': STANDARD_PHASE, 
+    'jobName': 'Job-1', 'memory': 128.605960845947})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': STANDARD_PHASE, 
+    'message': 'THE PLASTICITY/CREEP/CONNECTOR FRICTION ALGORITHM DID NOT CONVERGE AT 4 POINTS', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.0, 'attempts': ' 1U', 
+    'timeIncrement': 1.0, 'increment': 1, 'stepTime': 0.0, 'step': 1, 
+    'jobName': 'Job-1', 'severe': 0, 'iterations': 3, 'phase': STANDARD_PHASE, 
+    'equilibrium': 3})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': STANDARD_PHASE, 
+    'message': 'THE PLASTICITY/CREEP/CONNECTOR FRICTION ALGORITHM DID NOT CONVERGE AT 4 POINTS', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.0, 'attempts': ' 2U', 
+    'timeIncrement': 0.25, 'increment': 1, 'stepTime': 0.0, 'step': 1, 
+    'jobName': 'Job-1', 'severe': 0, 'iterations': 4, 'phase': STANDARD_PHASE, 
+    'equilibrium': 4})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 1, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.0625, 'attempts': 3, 
+    'timeIncrement': 0.0625, 'increment': 1, 'stepTime': 0.0625, 'step': 1, 
+    'jobName': 'Job-1', 'severe': 0, 'iterations': 6, 'phase': STANDARD_PHASE, 
+    'equilibrium': 6})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 2, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.125, 'attempts': 1, 
+    'timeIncrement': 0.0625, 'increment': 2, 'stepTime': 0.125, 'step': 1, 
+    'jobName': 'Job-1', 'severe': 0, 'iterations': 6, 'phase': STANDARD_PHASE, 
+    'equilibrium': 6})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 3, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.1875, 'attempts': 1, 
+    'timeIncrement': 0.0625, 'increment': 3, 'stepTime': 0.1875, 'step': 1, 
+    'jobName': 'Job-1', 'severe': 0, 'iterations': 5, 'phase': STANDARD_PHASE, 
+    'equilibrium': 5})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 4, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.25, 'attempts': 1, 
+    'timeIncrement': 0.0625, 'increment': 4, 'stepTime': 0.25, 'step': 1, 
+    'jobName': 'Job-1', 'severe': 0, 'iterations': 4, 'phase': STANDARD_PHASE, 
+    'equilibrium': 4})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 5, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.3125, 'attempts': 1, 
+    'timeIncrement': 0.0625, 'increment': 5, 'stepTime': 0.3125, 'step': 1, 
+    'jobName': 'Job-1', 'severe': 0, 'iterations': 5, 'phase': STANDARD_PHASE, 
+    'equilibrium': 5})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 6, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.375, 'attempts': 1, 
+    'timeIncrement': 0.0625, 'increment': 6, 'stepTime': 0.375, 'step': 1, 
+    'jobName': 'Job-1', 'severe': 0, 'iterations': 3, 'phase': STANDARD_PHASE, 
+    'equilibrium': 3})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 7, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.4375, 'attempts': 1, 
+    'timeIncrement': 0.0625, 'increment': 7, 'stepTime': 0.4375, 'step': 1, 
+    'jobName': 'Job-1', 'severe': 0, 'iterations': 3, 'phase': STANDARD_PHASE, 
+    'equilibrium': 3})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 8, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.53125, 'attempts': 1, 
+    'timeIncrement': 0.09375, 'increment': 8, 'stepTime': 0.53125, 'step': 1, 
+    'jobName': 'Job-1', 'severe': 0, 'iterations': 5, 'phase': STANDARD_PHASE, 
+    'equilibrium': 5})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 9, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.625, 'attempts': 1, 
+    'timeIncrement': 0.09375, 'increment': 9, 'stepTime': 0.625, 'step': 1, 
+    'jobName': 'Job-1', 'severe': 0, 'iterations': 4, 'phase': STANDARD_PHASE, 
+    'equilibrium': 4})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 10, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.71875, 'attempts': 1, 
+    'timeIncrement': 0.09375, 'increment': 10, 'stepTime': 0.71875, 'step': 1, 
+    'jobName': 'Job-1', 'severe': 0, 'iterations': 4, 'phase': STANDARD_PHASE, 
+    'equilibrium': 4})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 11, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.859375, 'attempts': 1, 
+    'timeIncrement': 0.140625, 'increment': 11, 'stepTime': 0.859375, 
+    'step': 1, 'jobName': 'Job-1', 'severe': 0, 'iterations': 6, 
+    'phase': STANDARD_PHASE, 'equilibrium': 6})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 12, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 1.0, 'attempts': 1, 
+    'timeIncrement': 0.140625, 'increment': 12, 'stepTime': 1.0, 'step': 1, 
+    'jobName': 'Job-1', 'severe': 0, 'iterations': 6, 'phase': STANDARD_PHASE, 
+    'equilibrium': 6})
+mdb.jobs['Job-1']._Message(END_STEP, {'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(COMPLETED, {'phase': STANDARD_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(JOB_COMPLETED, {'time': 'Sat Nov 21 09:30:22 2020', 
+    'jobName': 'Job-1'})

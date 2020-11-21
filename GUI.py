@@ -60,9 +60,11 @@ class mywindow(QtWidgets.QMainWindow):
 
         self.compression=QtWidgets.QPushButton("Compression")
         self.tension=QtWidgets.QPushButton('Tension')
-        self.partialCompreesion=QtWidgets.QPushButton("Partial Compression") 
-        self.tickp=self.partialCompreesion
+        self.smallPartialCompreesion=QtWidgets.QPushButton("Small Partial Compression") 
+        self.bigPartialCompreesion=QtWidgets.QPushButton("Big Partial Compression") 
+        self.tickp=self.smallPartialCompreesion
         self.flexure=QtWidgets.QPushButton("Flexure")
+        self.shear=QtWidgets.QPushButton('Shear')
         self.tickf=self.flexure
 
         self.chooseLabel=QtWidgets.QLabel('Choose component')
@@ -88,45 +90,102 @@ class mywindow(QtWidgets.QMainWindow):
         if self.chooseColumns.isChecked():
             if self.tickf==self.flexure:
                 self.flexure.deleteLater()
+                self.shear.deleteLater()
                 self.flexure=0
             self.columnLayout()
         else:
-            if self.tickp==self.partialCompreesion:
-                self.partialCompreesion.deleteLater()
-                self.partialCompreesion=0
+            if self.tickp==self.smallPartialCompreesion:
+                self.smallPartialCompreesion.deleteLater()
+                self.bigPartialCompreesion.deleteLater()
+                self.leftLayout.removeWidget(self.compression)
+                self.compression.deleteLater()
+                self.leftLayout.removeWidget(self.tension)
+                self.tension.deleteLater()
+                self.smallPartialCompreesion=0
             self.beamLayout()
     
     def beamLayout(self):
         self.flexure=QtWidgets.QPushButton("Flexure")
+        self.shear=QtWidgets.QPushButton('Shear')
         self.tickf=self.flexure
         self.leftLayout.addWidget(self.flexure,6,0,1,3)
-        self.leftLayout.addWidget(self.compression,7,0,1,3)
-        self.leftLayout.addWidget(self.tension,8,0,1,3)
+        self.leftLayout.addWidget(self.shear,7,0,1,3)
+        
 
 
     def columnLayout(self):
-        self.partialCompreesion=QtWidgets.QPushButton("Partial Compression")
-        self.tickp=self.partialCompreesion
-        self.leftLayout.addWidget(self.partialCompreesion,6,0,1,3)
-        self.leftLayout.addWidget(self.compression,7,0,1,3)
-        self.leftLayout.addWidget(self.tension,8,0,1,3)
+        self.smallPartialCompreesion=QtWidgets.QPushButton("Small Partial Compression")
+        self.bigPartialCompreesion=QtWidgets.QPushButton("Big Partial Compression")
+        self.compression=QtWidgets.QPushButton("Compression")
+        self.tension=QtWidgets.QPushButton('Tension')
+        self.tickp=self.smallPartialCompreesion
+        self.leftLayout.addWidget(self.smallPartialCompreesion,6,0,1,3)
+        self.leftLayout.addWidget(self.bigPartialCompreesion,7,0,1,3)
+        self.leftLayout.addWidget(self.compression,8,0,1,3)
+        self.leftLayout.addWidget(self.tension,9,0,1,3)
 
     def addRightWidget(self):
         '''Right widget is aimed to show unecessary pic\n
         or In the future, this part can display components info'''
-        conceptpix=QtGui.QPixmap(r'picture\1.jpg')
-        self.conceptLabel=QtWidgets.QLabel()
-        self.conceptLabel.setPixmap(conceptpix)
-        self.titleConceptLabel=QtWidgets.QLabel('Concept Pic')
-        self.rightLayout.addStretch(100)
-        self.rightLayout.addWidget(self.conceptLabel)
-        self.rightLayout.addStretch(1)
-        self.rightLayout.addWidget(self.titleConceptLabel,alignment=QtCore.Qt.AlignHCenter)
-        self.rightLayout.addStretch(100)
+        # conceptpix=QtGui.QPixmap(r'picture\1.jpg')
+        # self.conceptLabel=QtWidgets.QLabel()
+        # self.conceptLabel.setPixmap(conceptpix)
+        # self.titleConceptLabel=QtWidgets.QLabel('Concept Pic')
+        # self.rightLayout.addStretch(100)
+        # self.rightLayout.addWidget(self.conceptLabel)
+        # self.rightLayout.addStretch(1)
+        # self.rightLayout.addWidget(self.titleConceptLabel,alignment=QtCore.Qt.AlignHCenter)
+        # self.rightLayout.addStretch(100)
+
+        '''Describe the para of section:'''
+        self.sectionLayout=QtWidgets.QVBoxLayout()
+        self.materialLayout=QtWidgets.QVBoxLayout()
+        self.loadLayout=QtWidgets.QVBoxLayout()
+        paraLabel=QtWidgets.QLabel('Para info: ')
+        
+        self.rightLayout.addWidget(paraLabel)
+        self.rightLayout.addLayout(self.sectionLayout)
+        self.rightLayout.addLayout(self.materialLayout)
+        self.rightLayout.addLayout(self.loadLayout)
+
+        '''Specify sectionLayout'''
+        self.sectionLabel=QtWidgets.QLabel('Section: H,B (mm) :')
+        self.sectionValue=QtWidgets.QTextEdit('400,200')
+        self.sectionLayout.addWidget(self.sectionLabel)
+        self.sectionLayout.addWidget(self.sectionValue)
+
+        self.LengthLabel=QtWidgets.QLabel('Beam Length (mm) :')
+        self.LengthValue=QtWidgets.QTextEdit('3000')
+        self.sectionLayout.addWidget(self.LengthLabel)
+        self.sectionLayout.addWidget(self.LengthValue)
+
+        '''Specify MaterialLayout'''
+        self.steelLabel=QtWidgets.QLabel('Steel info:')
+        self.constrainSteelLabel=QtWidgets.QLabel('ConstrainSteel info (Strength grade,Diameter,Offset,Legs):')
+        self.constrainSteelValue=QtWidgets.QTextEdit('HPB300,14,150,2')
+        self.longitudeSteelLabel=QtWidgets.QLabel('LongitudeSteel info (Strength grade,Ylied strength,Diameter,Number):')
+        self.longitudeSteelValue=QtWidgets.QTextEdit('HRB400,360,14,3')
+        self.materialLayout.addWidget(self.steelLabel)
+        self.materialLayout.addWidget(self.constrainSteelLabel)
+        self.materialLayout.addWidget(self.constrainSteelValue)
+        self.materialLayout.addWidget(self.longitudeSteelLabel)
+        self.materialLayout.addWidget(self.longitudeSteelValue)
+
+        '''Specify loadLayout'''
+        self.loadLabel=QtWidgets.QLabel('Load pattern :')
+        self.pic=QtGui.QPixmap(r'picture\示意图.png')
+        self.loadPic=QtWidgets.QLabel()
+        self.loadPic.setMaximumSize(500,200)
+        self.loadPic.setPixmap(self.pic)
+        self.loadPic.setScaledContents(True)
+        self.loadLayout.addWidget(self.loadLabel)
+        self.loadLayout.addWidget(self.loadPic)
+
+
 
     def addMidWidget(self):
         '''MidWidget is core part which is used to show gif caculated by abaqus'''
-        abaqusReasult=QtGui.QMovie(r'picture\2.gif')
+        abaqusReasult=QtGui.QMovie(r'picture\ShearFailure.gif')
         self.abaqusLabel=QtWidgets.QLabel()
         self.abaqusLabel.setMovie(abaqusReasult)
         abaqusReasult.start()

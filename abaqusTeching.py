@@ -17,8 +17,7 @@ session.viewports['Viewport: 1'].maximize()
 from caeModules import *
 from driverUtils import executeOnCaeStartup
 executeOnCaeStartup()
-session.viewports['Viewport: 1'].partDisplay.geometryOptions.setValues(
-    referenceRepresentation=ON)
+
 Mdb()
 #: A new model database has been created.
 #: The model "Model-1" has been created.
@@ -29,7 +28,6 @@ s = mdb.models['Model-1'].ConstrainedSketch(name='__profile__',
     sheetSize=200.0)
 g, v, d, c = s.geometry, s.vertices, s.dimensions, s.constraints
 s.setPrimaryObject(option=STANDALONE)
-del session.viewports['Viewport: 1']
 #* CanvasError: SystemError: the current viewport may not be deleted.
 s.unsetPrimaryObject()
 del mdb.models['Model-1'].sketches['__profile__']
@@ -49,26 +47,6 @@ mdb.models['Model-1'].materials['Concrete'].concreteDamagedPlasticity.ConcreteCo
     (19200000.0, 0.002874), (1130.0, 0.02)))
 mdb.models['Model-1'].materials['Concrete'].concreteDamagedPlasticity.ConcreteTensionStiffening(
     table=((2260000.0, 0.0), ))
-mdb.save()
-#: The model database has been saved to "C:\Users\Ray\Desktop\abaqusGui\model\caeModel.cae".
-mdb.save()
-#: The model database has been saved to "C:\Users\Ray\Desktop\abaqusGui\model\caeModel.cae".
-mdb.save()
-#: The model database has been saved to "C:\Users\Ray\Desktop\abaqusGui\model\caeModel.cae".
-mdb.save()
-#: The model database has been saved to "C:\Users\Ray\Desktop\abaqusGui\model\caeModel.cae".
-session.viewports['Viewport: 1'].view.setValues(nearPlane=2.44302, 
-    farPlane=4.48518, width=1.7659, height=0.865414, cameraPosition=(1.45627, 
-    -1.7746, 2.05898), cameraUpVector=(0.159424, 0.926888, 0.339798), 
-    cameraTarget=(-0.5, -0.5, -0.5))
-session.viewports['Viewport: 1'].view.setValues(nearPlane=2.52285, 
-    farPlane=4.40535, width=1.8236, height=0.893693, cameraPosition=(2.17751, 
-    -2.59235, 0.173036), cameraUpVector=(0.465468, 0.747885, 0.473294), 
-    cameraTarget=(-0.5, -0.5, -0.500001))
-session.viewports['Viewport: 1'].view.setValues(nearPlane=2.46095, 
-    farPlane=4.46725, width=1.77885, height=0.871764, cameraPosition=(2.04829, 
-    -2.36759, -1.92067), cameraUpVector=(0.677033, 0.604707, 0.419471), 
-    cameraTarget=(-0.5, -0.5, -0.500003))
 mdb.models['Model-1'].materials['Concrete'].density.setValues(table=((2400.0, 
     ), ))
 mdb.models['Model-1'].Material(name='Steel')
@@ -1099,4 +1077,3 @@ mdb.Job(name='Job-1', model='Model-1', description='', type=ANALYSIS,
     modelPrint=OFF, contactPrint=OFF, historyPrint=OFF, userSubroutine='', 
     scratch='', multiprocessingMode=DEFAULT, numCpus=4, numDomains=4, 
     numGPUs=0)
-mdb.jobs['Job-1'].submit(consistencyChecking=OFF)
