@@ -151,11 +151,13 @@ class mywindow(QtWidgets.QMainWindow):
         '''Specify sectionLayout'''
         self.sectionLabel=QtWidgets.QLabel('Section: H,B (mm) :')
         self.sectionValue=QtWidgets.QTextEdit('400,200')
+        self.sectionValue.setMaximumHeight(30)
         self.sectionLayout.addWidget(self.sectionLabel)
         self.sectionLayout.addWidget(self.sectionValue)
 
         self.LengthLabel=QtWidgets.QLabel('Beam Length (mm) :')
         self.LengthValue=QtWidgets.QTextEdit('3000')
+        self.LengthValue.setMaximumHeight(30)
         self.sectionLayout.addWidget(self.LengthLabel)
         self.sectionLayout.addWidget(self.LengthValue)
 
@@ -163,8 +165,10 @@ class mywindow(QtWidgets.QMainWindow):
         self.steelLabel=QtWidgets.QLabel('Steel info:')
         self.constrainSteelLabel=QtWidgets.QLabel('ConstrainSteel info (Strength grade,Diameter,Offset,Legs):')
         self.constrainSteelValue=QtWidgets.QTextEdit('HPB300,14,150,2')
+        self.constrainSteelValue.setMaximumHeight(30)
         self.longitudeSteelLabel=QtWidgets.QLabel('LongitudeSteel info (Strength grade,Ylied strength,Diameter,Number):')
         self.longitudeSteelValue=QtWidgets.QTextEdit('HRB400,360,14,3')
+        self.longitudeSteelValue.setMaximumHeight(30)
         self.materialLayout.addWidget(self.steelLabel)
         self.materialLayout.addWidget(self.constrainSteelLabel)
         self.materialLayout.addWidget(self.constrainSteelValue)
