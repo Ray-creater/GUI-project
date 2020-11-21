@@ -14,6 +14,7 @@ class mywindow(QtWidgets.QMainWindow):
         self.addLeftWidget()
         self.addRightWidget()
         self.addMidWidget()
+        self.pressbuttonfunction()
         self.show()
         
 
@@ -62,10 +63,10 @@ class mywindow(QtWidgets.QMainWindow):
         self.tension=QtWidgets.QPushButton('Tension')
         self.smallPartialCompreesion=QtWidgets.QPushButton("Small Partial Compression") 
         self.bigPartialCompreesion=QtWidgets.QPushButton("Big Partial Compression") 
-        self.tickp=self.smallPartialCompreesion
+        
         self.flexure=QtWidgets.QPushButton("Flexure")
         self.shear=QtWidgets.QPushButton('Shear')
-        self.tickf=self.flexure
+       
 
         self.chooseLabel=QtWidgets.QLabel('Choose component')
         self.chooseBeam=QtWidgets.QRadioButton('Beam')
@@ -73,7 +74,7 @@ class mywindow(QtWidgets.QMainWindow):
         self.chooseBeam.setChecked(True)
         self.chooseColumns.setChecked(False)
         self.verifiedButton=QtWidgets.QPushButton('ok')
-
+        self.showFailuremode()
         self.verifiedButton.clicked.connect(self.showFailuremode)
         
         
@@ -87,42 +88,36 @@ class mywindow(QtWidgets.QMainWindow):
 
 
     def showFailuremode(self):
+
         if self.chooseColumns.isChecked():
-            if self.tickf==self.flexure:
-                self.flexure.deleteLater()
-                self.shear.deleteLater()
-                self.flexure=0
+            self.flexure.hide()
+            self.shear.hide()
             self.columnLayout()
         else:
-            if self.tickp==self.smallPartialCompreesion:
-                self.smallPartialCompreesion.deleteLater()
-                self.bigPartialCompreesion.deleteLater()
-                self.leftLayout.removeWidget(self.compression)
-                self.compression.deleteLater()
-                self.leftLayout.removeWidget(self.tension)
-                self.tension.deleteLater()
-                self.smallPartialCompreesion=0
+            self.smallPartialCompreesion.hide()
+            self.bigPartialCompreesion.hide()
+            self.compression.hide()
+            self.tension.hide()
             self.beamLayout()
     
     def beamLayout(self):
-        self.flexure=QtWidgets.QPushButton("Flexure")
-        self.shear=QtWidgets.QPushButton('Shear')
-        self.tickf=self.flexure
+        self.flexure.show()
+        self.shear.show()
         self.leftLayout.addWidget(self.flexure,6,0,1,3)
         self.leftLayout.addWidget(self.shear,7,0,1,3)
         
 
 
     def columnLayout(self):
-        self.smallPartialCompreesion=QtWidgets.QPushButton("Small Partial Compression")
-        self.bigPartialCompreesion=QtWidgets.QPushButton("Big Partial Compression")
-        self.compression=QtWidgets.QPushButton("Compression")
-        self.tension=QtWidgets.QPushButton('Tension')
-        self.tickp=self.smallPartialCompreesion
+        self.smallPartialCompreesion.show()
+        self.bigPartialCompreesion.show()
+        self.compression.show()
+        self.tension.show()
         self.leftLayout.addWidget(self.smallPartialCompreesion,6,0,1,3)
         self.leftLayout.addWidget(self.bigPartialCompreesion,7,0,1,3)
         self.leftLayout.addWidget(self.compression,8,0,1,3)
         self.leftLayout.addWidget(self.tension,9,0,1,3)
+        
 
     def addRightWidget(self):
         '''Right widget is aimed to show unecessary pic\n
@@ -142,7 +137,7 @@ class mywindow(QtWidgets.QMainWindow):
         self.materialLayout=QtWidgets.QVBoxLayout()
         self.loadLayout=QtWidgets.QVBoxLayout()
         paraLabel=QtWidgets.QLabel('Para info: ')
-        
+
         self.rightLayout.addWidget(paraLabel)
         self.rightLayout.addLayout(self.sectionLayout)
         self.rightLayout.addLayout(self.materialLayout)
@@ -152,12 +147,14 @@ class mywindow(QtWidgets.QMainWindow):
         self.sectionLabel=QtWidgets.QLabel('Section: H,B (mm) :')
         self.sectionValue=QtWidgets.QTextEdit('400,200')
         self.sectionValue.setMaximumHeight(30)
+        self.sectionValue.setMaximumWidth(150)
         self.sectionLayout.addWidget(self.sectionLabel)
         self.sectionLayout.addWidget(self.sectionValue)
 
         self.LengthLabel=QtWidgets.QLabel('Beam Length (mm) :')
         self.LengthValue=QtWidgets.QTextEdit('3000')
         self.LengthValue.setMaximumHeight(30)
+        self.LengthValue.setMaximumWidth(150)
         self.sectionLayout.addWidget(self.LengthLabel)
         self.sectionLayout.addWidget(self.LengthValue)
 
@@ -166,9 +163,11 @@ class mywindow(QtWidgets.QMainWindow):
         self.constrainSteelLabel=QtWidgets.QLabel('ConstrainSteel info (Strength grade,Diameter,Offset,Legs):')
         self.constrainSteelValue=QtWidgets.QTextEdit('HPB300,14,150,2')
         self.constrainSteelValue.setMaximumHeight(30)
+        self.constrainSteelValue.setMaximumWidth(150)
         self.longitudeSteelLabel=QtWidgets.QLabel('LongitudeSteel info (Strength grade,Ylied strength,Diameter,Number):')
         self.longitudeSteelValue=QtWidgets.QTextEdit('HRB400,360,14,3')
         self.longitudeSteelValue.setMaximumHeight(30)
+        self.longitudeSteelValue.setMaximumWidth(150)
         self.materialLayout.addWidget(self.steelLabel)
         self.materialLayout.addWidget(self.constrainSteelLabel)
         self.materialLayout.addWidget(self.constrainSteelValue)
@@ -189,18 +188,34 @@ class mywindow(QtWidgets.QMainWindow):
 
     def addMidWidget(self):
         '''MidWidget is core part which is used to show gif caculated by abaqus'''
-        abaqusReasult=QtGui.QMovie(r'picture\ShearFailure.gif')
+        gif=QtGui.QMovie(r'GUI\picture\PureFlexural.gif')
         self.abaqusLabel=QtWidgets.QLabel()
-        self.abaqusLabel.setMovie(abaqusReasult)
-        abaqusReasult.start()
-        self.titleAbaqusLabel=QtWidgets.QLabel('Abaqus Pic')
+        self.abaqusLabel.setMovie(gif)
+        gif.start()
+        self.titleAbaqusLabel=QtWidgets.QLabel('Pure flexure')
         self.midLayout.addStretch(100)
         self.midLayout.addWidget(self.abaqusLabel,alignment=QtCore.Qt.AlignHCenter)
         self.midLayout.addStretch(1)
         self.midLayout.addWidget(self.titleAbaqusLabel,alignment=QtCore.Qt.AlignHCenter)
         self.midLayout.addStretch(100)
 
+    def pressbuttonfunction(self):
+        self.flexure.clicked.connect(self.flexurePlot)
+        self.shear.clicked.connect(self.shearPlot)
 
+
+    def flexurePlot(self):
+        gif=QtGui.QMovie(r'GUI\picture\PureFlexural.gif')
+        self.abaqusLabel.setMovie(gif)
+        self.titleAbaqusLabel.setText('Pure Flexure')
+        gif.start()
+
+    def shearPlot(self):
+        gif=QtGui.QMovie(r'GUI\picture\ShearFailure.gif')
+        self.abaqusLabel.setMovie(gif)
+        self.titleAbaqusLabel.setText('Shear')
+        gif.start()
+        
         
         
 

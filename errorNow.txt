@@ -1,7 +1,0 @@
-overconstrain between analytic rigid and deformated 
-
-concrete hardning compression stress or strain is smaller than minimum
-so assume a minimum
-
-
-Job aborted
