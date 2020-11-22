@@ -1,6 +1,5 @@
 import sys
-from PyQt5 import QtWidgets, QtCore,QtGui,Qt
-from PyQt5.QtGui import QIcon
+from PyQt5 import QtWidgets, QtCore,QtGui,Qt,QtMultimedia,QtMultimediaWidgets
 import qtawesome
 
 class mywindow(QtWidgets.QMainWindow):
@@ -16,7 +15,7 @@ class mywindow(QtWidgets.QMainWindow):
         self.addMidWidget()
         self.pressbuttonfunction()
         self.show()
-        
+            
 
     def layout(self):
         '''Init whole mainwinodws \n
@@ -43,21 +42,31 @@ class mywindow(QtWidgets.QMainWindow):
         self.rightLayout=QtWidgets.QVBoxLayout()
         self.rightWidget.setLayout(self.rightLayout)
 
-        self.mainLayout.addWidget(self.leftWidget,0,0,12,3)
-        self.mainLayout.addWidget(self.midWidget,0,3,12,5)
-        self.mainLayout.addWidget(self.rightWidget,0,8,12,1)
+        self.mainLayout.addWidget(self.leftWidget,0,0)
+        self.mainLayout.addWidget(self.midWidget,0,1)
+        self.mainLayout.addWidget(self.rightWidget,0,2)
+        self.mainLayout.setColumnStretch(0,1)
+        self.mainLayout.setColumnStretch(1,0)
+        self.mainLayout.setColumnStretch(2,2)
 
         self.status=QtWidgets.QStatusBar()
         self.setCentralWidget(self.mainWidget)
         self.setStatusBar(self.status)
         self.status.showMessage('Ready')
         self.setWindowTitle('Teaching Tool')
+    
+    # def mousePressEvent(self, event):
+    #     if event.button() == QtCore.Qt.LeftButton:
+    #         self.m_flag = True
+    #         self.m_Position = event.globalPos() - self.pos()  # 获取鼠标相对窗口的位置
+    #         event.accept()
+    #         self.setCursor(Qt.QCursor(QtCore.Qt.OpenHandCursor)) 
 
     def addLeftWidget(self):
         '''Left windgets contain toggle box and button showing which component's failure mode'''
-        self.leftClose=QtWidgets.QPushButton("")
-        self.leftVisit=QtWidgets.QPushButton("")
-        self.leftMini=QtWidgets.QPushButton("")
+        # self.leftClose=QtWidgets.QPushButton("")
+        # self.leftVisit=QtWidgets.QPushButton("")
+        # self.leftMini=QtWidgets.QPushButton("")   
 
         self.compression=QtWidgets.QPushButton("Compression")
         self.tension=QtWidgets.QPushButton('Tension')
@@ -188,16 +197,8 @@ class mywindow(QtWidgets.QMainWindow):
 
     def addMidWidget(self):
         '''MidWidget is core part which is used to show gif caculated by abaqus'''
-        gif=QtGui.QMovie(r'GUI\picture\PureFlexural.gif')
-        self.abaqusLabel=QtWidgets.QLabel()
-        self.abaqusLabel.setMovie(gif)
-        gif.start()
-        self.titleAbaqusLabel=QtWidgets.QLabel('Pure flexure')
-        self.midLayout.addStretch(100)
-        self.midLayout.addWidget(self.abaqusLabel,alignment=QtCore.Qt.AlignHCenter)
-        self.midLayout.addStretch(1)
-        self.midLayout.addWidget(self.titleAbaqusLabel,alignment=QtCore.Qt.AlignHCenter)
-        self.midLayout.addStretch(100)
+        
+
 
     def pressbuttonfunction(self):
         self.flexure.clicked.connect(self.flexurePlot)
@@ -205,16 +206,33 @@ class mywindow(QtWidgets.QMainWindow):
 
 
     def flexurePlot(self):
-        gif=QtGui.QMovie(r'GUI\picture\PureFlexural.gif')
-        self.abaqusLabel.setMovie(gif)
-        self.titleAbaqusLabel.setText('Pure Flexure')
-        gif.start()
+        self.mediaplayer('file:picture\PureFlexural.gif')
+        self.status.showMessage('Pure Flexure')
+        self.playerWidgets.setWindowTitle('Pure Flexure')
+
 
     def shearPlot(self):
-        gif=QtGui.QMovie(r'GUI\picture\ShearFailure.gif')
-        self.abaqusLabel.setMovie(gif)
-        self.titleAbaqusLabel.setText('Shear')
-        gif.start()
+        self.mediaplayer('file:picture\ShearFailure.gif')
+        self.status.showMessage('Shear (Pure concrete)')
+        self.playerWidgets.setWindowTitle('Shear (Pure concret)')
+
+
+    def mediaplayer(self,path):
+
+        #Create playList and add media
+        self.playList=QtMultimedia.QMediaPlaylist()
+        self.playList.addMedia(QtMultimedia.QMediaContent(QtCore.QUrl(path)))
+        self.playList.setCurrentIndex(1)
+        self.playList.setPlaybackMode(QtMultimedia.QMediaPlaylist.CurrentItemInLoop)
+        #Create player and add playlist to player 
+        self.player=QtMultimedia.QMediaPlayer()
+        self.player.setPlaylist(self.playList)
+        #Create play widgets 
+        self.playerWidgets=QtMultimediaWidgets.QVideoWidget()
+        self.playerWidgets.show()
+        self.player.setVideoOutput(self.playerWidgets)
+        self.player.play()
+        #Add widgets to layout
         
         
         
