@@ -19,6 +19,7 @@ class mywindow(QtWidgets.QMainWindow):
         b4=QtWidgets.QPushButton('btn4')
         b5=QtWidgets.QPushButton('btn5')
         b6=QtWidgets.QPushButton('btn6')
+        b2.set
 
         layout=QtWidgets.QGridLayout()
 

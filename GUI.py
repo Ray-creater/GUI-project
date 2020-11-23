@@ -221,7 +221,9 @@ class mywindow(QtWidgets.QMainWindow):
 
         #Create playList and add media
         self.playList=QtMultimedia.QMediaPlaylist()
-        self.playList.addMedia(QtMultimedia.QMediaContent(QtCore.QUrl(path)))
+        # self.playList.addMedia(QtMultimedia.QMediaContent(QtCore.QUrl(path)))
+        self.playList.addMedia(QtMultimedia.QMediaContent(QtCore.QUrl('file:picture\Rebar.avi')))
+
         self.playList.setCurrentIndex(1)
         self.playList.setPlaybackMode(QtMultimedia.QMediaPlaylist.CurrentItemInLoop)
         #Create player and add playlist to player 
